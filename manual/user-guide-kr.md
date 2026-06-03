@@ -20,6 +20,7 @@
 - [10. Source IE Tree 팝업](#10-source-ie-tree-팝업)
 - [11. 세션 저장 / 불러오기](#11-세션-저장--불러오기)
 - [12. 반응형 레이아웃](#12-반응형-레이아웃)
+- [13. 트러블슈팅 (Windows WSL)](#13-트러블슈팅-windows-wsl)
 
 ---
 
@@ -395,6 +396,42 @@ rrcReconfiguration
 - Sidebar가 햄버거 메뉴로 전환
 - 메인 콘텐츠는 scroll-snap 기반 좌우 스와이프
 - 하단 도트 인디케이터로 현재 위치 표시
+
+---
+
+## 13. 트러블슈팅 (Windows WSL)
+
+### 13.1 BIOS 가상화 미활성화
+
+**증상:** `setup-wsl.bat` 실행 시 `HCS_E_HYPERV_NOT_INSTALLED` 에러
+
+**해결:**
+1. PC 재시작 → BIOS 진입 (F2 또는 Del)
+2. Intel VT-x 또는 AMD SVM 항목을 Enabled로 변경
+3. 저장 후 재시작
+
+**확인 방법:** 작업 관리자 → 성능 → CPU → "가상화: 사용" 표시 확인
+
+### 13.2 설치 중 재부팅 필요
+
+**증상:** `setup-wsl.bat` 실행 후 "재부팅이 필요합니다" 메시지
+
+WSL2에 필요한 VirtualMachinePlatform은 Windows 커널 기능이므로 최초 활성화 시 재부팅이 필수입니다.  
+재부팅 후 `setup-wsl.bat`을 다시 실행하면 이어서 설치됩니다.
+
+### 13.3 브라우저에서 페이지 연결 불가
+
+**증상:** 서버는 실행되었다고 표시되지만 브라우저에서 `ERR_CONNECTION_REFUSED` 또는 페이지가 열리지 않음
+
+**원인:** WSL2는 가상 네트워크를 사용하며, Windows에서 localhost 접근은 WSL2 → Windows 포워딩에 의존합니다. 서버를 종료하지 않고 `run-wsl.bat`을 다시 실행하면 이 포워딩이 일시적으로 꼬일 수 있습니다.
+
+**해결:**
+
+1. 잠시 대기 후 (30초~1분) 브라우저 새로고침
+2. 여전히 안 되면 CMD(관리자)에서 `wsl --shutdown` 실행 후 `run-wsl.bat` 재실행
+3. 그래도 안 되면 Windows 재부팅
+
+**예방:** 서버를 종료하려면 CMD 창에서 **Ctrl+C**를 사용하세요. CMD 창을 X 버튼으로 닫거나, 서버가 실행 중인 상태에서 `run-wsl.bat`을 다시 실행하면 문제가 발생할 수 있습니다.
 
 ---
 

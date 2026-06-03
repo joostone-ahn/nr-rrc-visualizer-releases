@@ -20,6 +20,7 @@
 - [10. Source IE Tree Popup](#10-source-ie-tree-popup)
 - [11. Session Save / Load](#11-session-save--load)
 - [12. Responsive Layout](#12-responsive-layout)
+- [13. Troubleshooting (Windows WSL)](#13-troubleshooting-windows-wsl)
 
 ---
 
@@ -395,6 +396,42 @@ rrcReconfiguration
 - Sidebar collapses into a hamburger menu
 - Main content uses scroll-snap for horizontal swipe navigation
 - Bottom dot indicator shows current position
+
+---
+
+## 13. Troubleshooting (Windows WSL)
+
+### 13.1 BIOS Virtualization Not Enabled
+
+**Symptom:** `HCS_E_HYPERV_NOT_INSTALLED` error when running `setup-wsl.bat`
+
+**Solution:**
+1. Restart PC → Enter BIOS (F2 or Del)
+2. Enable Intel VT-x or AMD SVM
+3. Save and restart
+
+**Verification:** Task Manager → Performance → CPU → Confirm "Virtualization: Enabled"
+
+### 13.2 Reboot Required During Setup
+
+**Symptom:** "A reboot is required" message after running `setup-wsl.bat`
+
+VirtualMachinePlatform is a Windows kernel feature that requires a reboot on first activation.  
+After rebooting, run `setup-wsl.bat` again to continue installation.
+
+### 13.3 Browser Cannot Connect to Page
+
+**Symptom:** Server shows "starting" message but browser displays `ERR_CONNECTION_REFUSED`
+
+**Cause:** WSL2 uses a virtual network, and Windows accesses localhost through WSL2 → Windows forwarding. If `run-wsl.bat` is executed again without stopping the previous server, this forwarding can temporarily break.
+
+**Solution:**
+
+1. Wait 30 seconds to 1 minute, then refresh the browser
+2. If still not working, run `wsl --shutdown` in an Administrator CMD, then re-run `run-wsl.bat`
+3. If that doesn't help, reboot Windows
+
+**Prevention:** Always use **Ctrl+C** to stop the server. Avoid closing the CMD window with the X button or running `run-wsl.bat` again while the server is still running.
 
 ---
 
