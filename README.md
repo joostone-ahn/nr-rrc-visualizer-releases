@@ -2,7 +2,7 @@
 
 A web-based tool that parses 5G NR RRC messages and visualizes PHY configuration. Built to assist engineers analyzing radio network parameters from multi-vendor chipset logs.
 
-[![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
+![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red)
 
 ---
 
@@ -36,34 +36,56 @@ This tool bridges that gap by:
 
 **[Try Online Demo](https://huggingface.co/spaces/Joostone/nr-rrc-visualizer)**
 
+![NR RRC Visualizer - BWP Map](docs/images/screenshot_rrc_visualizer_bwp.png)
+![NR RRC Visualizer - CSI-RS](docs/images/screenshot_rrc_visualizer_csi.png)
+
 ---
 
 ## 💻 Run Locally
 
-Download `run-docker.sh` (macOS/Linux) or `run-docker.bat` (Windows) from [Releases](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/releases/latest).
+Download the latest release from [Releases](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/releases/latest).
 
-**Prerequisite**: [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+### macOS
 
-**macOS/Linux:**
-```bash
-chmod +x run-docker.sh
-./run-docker.sh
-```
+**Prerequisites**: [Homebrew](https://brew.sh), Python 3.10+, Node.js 20+
 
-**Windows:**
-```cmd
-run-docker.bat
-```
+1. Download and extract `nr-rrc-visualizer-vX.X.X-macos.zip`
+2. Double-click `run/run.command` (or run `bash run/run.command` in terminal)
+3. Browser opens at `http://localhost:8333`
 
-> All dependencies are bundled in the Docker image. No Node.js, tshark, or scat installation needed. Re-run the script to update.
+> On first run, dependencies (tshark, scat, Node.js packages) are installed automatically.
+
+### Windows (WSL)
+
+**Prerequisites**: Windows 10/11, Administrator access, BIOS virtualization enabled
+
+1. Download and extract `nr-rrc-visualizer-vX.X.X-windows.zip`
+2. Run `run/setup-wsl.bat` as Administrator (one-time setup)
+3. Run `run/run-wsl.bat` as Administrator (every time)
+4. Browser opens at `http://localhost:8333`
+
+> First-time setup requires a reboot. After reboot, run `setup-wsl.bat` again to complete.
 
 ---
 
 ## 📖 How to Use
 
 See the User Guide for detailed instructions:
-- [English](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/blob/main/manual/user_guide_en_v1.1.0.md)
-- [한국어](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/blob/main/manual/user_guide_kr_v1.1.0.md)
+- [English](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/blob/main/manual/user-guide-en.md)
+- [한국어](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/blob/main/manual/user-guide-kr.md)
+
+---
+
+## 📋 Change History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| v1.2.0 | 2026-06-03 | Native run scripts (macOS/Windows WSL) |
+| v1.1.0 | 2026-05-27 | Parser architecture refactoring, PUCCH view improvements (RB Map colors/Hop display), ARFCN toggle fix |
+| v1.0.3 | 2026-05-26 | BWP Map: ARFCN auto-apply (A3 measObject), parser field scope improvement |
+| v1.0.2 | 2026-05-25 | BWP Map: multi-message sourceIE accumulation, CORESET#0 display fix, chart grid improvement |
+| v1.0.1 | 2026-05-18 | VoNR C-DRX Compliance verification logic fix |
+| v1.0.0 | 2026-05-15 | Initial release |
 
 ---
 
@@ -77,12 +99,10 @@ See the User Guide for detailed instructions:
 
 ## 📄 License
 
-**© 2026 JUSEOK AHN. All rights reserved.**
+© 2026 JUSEOK AHN <ajs3013@lguplus.co.kr>. All rights reserved.
 
-This software is proprietary and confidential.
+This software is provided free of charge for personal and internal use.
+You may not modify, distribute, sublicense, or sell copies of this software
+without explicit written permission from the author.
 
-### Applicable For
-- Network engineers analyzing 5G SA/NSA RRC configurations
-- QA teams performing device certification and compliance testing
-- Researchers working with 3GPP PHY/MAC/RRC layer parameters
-- Field engineers debugging mobility, VoNR, and power saving issues
+Relies on [tshark](https://www.wireshark.org/) (GPL-2.0) and [scat](https://github.com/fgsect/scat) (GPL-2.0) as external subprocesses.
