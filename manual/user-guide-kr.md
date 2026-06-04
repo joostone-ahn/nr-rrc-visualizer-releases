@@ -36,13 +36,23 @@
 
 > 첫 실행 시 의존성 (tshark, scat, Node.js 패키지)이 자동 설치됩니다.
 
-### 1.2 Windows (WSL)
+### 1.2 Windows — File Mode (WSL 불필요)
+
+**사전 요구사항 없음** — 첫 실행 시 모든 의존성이 자동으로 설치됩니다.
+
+1. ZIP 파일을 다운로드하여 압축 해제
+2. `run/start-filemode.bat` 더블클릭
+3. 브라우저에서 http://localhost:8333 자동 열림
+
+> 첫 실행 시 Node.js, Python, Wireshark (tshark), git, scat, scat.lua 플러그인이 winget을 통해 자동 설치됩니다. 설치 후 스크립트 재시작이 필요할 수 있습니다.
+
+### 1.3 Windows — WSL (향후 USB Mode 대비)
 
 **사전 요구사항:** Windows 10/11, 관리자 권한, BIOS 가상화 활성화
 
 1. ZIP 파일을 다운로드하여 압축 해제
-2. `run/setup-wsl.bat`을 관리자 권한으로 실행 (최초 1회)
-3. `run/run-wsl.bat`을 관리자 권한으로 실행 (매번)
+2. `run/setup-wsl.bat` 더블클릭 (최초 1회, 자동으로 관리자 권한 요청)
+3. `run/start-usbmode.bat` 더블클릭 (매번, 자동으로 관리자 권한 요청)
 4. 브라우저에서 http://localhost:8333 자동 열림
 
 > 최초 설정 시 재부팅이 필요합니다. 재부팅 후 `setup-wsl.bat`을 다시 실행하여 설정을 완료하세요.

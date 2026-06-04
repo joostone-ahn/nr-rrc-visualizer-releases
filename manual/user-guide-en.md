@@ -36,13 +36,23 @@
 
 > On first run, dependencies (tshark, scat, Node.js packages) are installed automatically.
 
-### 1.2 Windows (WSL)
+### 1.2 Windows — File Mode (no WSL required)
+
+**No prerequisites required** — all dependencies are installed automatically on first run.
+
+1. Download and extract the ZIP file
+2. Double-click `run/start-filemode.bat`
+3. Browser opens at http://localhost:8333
+
+> On first run, Node.js, Python, Wireshark (tshark), git, scat, and scat.lua plugin are automatically installed via winget. A script restart may be required after installation.
+
+### 1.3 Windows — WSL (for future USB Mode)
 
 **Prerequisites:** Windows 10/11, Administrator access, BIOS virtualization enabled
 
 1. Download and extract the ZIP file
-2. Run `run/setup-wsl.bat` as Administrator (one-time setup)
-3. Run `run/run-wsl.bat` as Administrator (every time)
+2. Double-click `run/setup-wsl.bat` (one-time setup, auto-elevates to admin)
+3. Double-click `run/start-usbmode.bat` (every time, auto-elevates to admin)
 4. Browser opens at http://localhost:8333
 
 > First-time setup requires a reboot. After reboot, run `setup-wsl.bat` again to complete.
