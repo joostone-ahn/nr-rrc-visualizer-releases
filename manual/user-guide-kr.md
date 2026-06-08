@@ -1,7 +1,7 @@
 # NR RRC Visualizer 사용자 가이드
 
-**버전:** v1.2.0  
-**최종 수정일:** 2026-06-03  
+**버전:** v1.4.0  
+**최종 수정일:** 2026-06-08  
 **작성자:** JUSEOK AHN <ajs3013@lguplus.co.kr>
 
 ---
@@ -26,36 +26,49 @@
 
 ## 1. 실행 방법
 
-### 1.1 macOS
+### 1.1 Windows (EXE)
 
-**사전 요구사항:** [Homebrew](https://brew.sh), Python 3.10+, Node.js 20+
+1. [Releases](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/releases)에서 최신 `NR-RRC-Visualizer-vX.X.X.exe`를 다운로드합니다
+2. EXE를 **관리자 권한으로 실행**합니다 (우클릭 → 관리자 권한으로 실행 권장)
+3. 스플래시 화면이 표시되며 환경을 자동 설정합니다
+4. 완료 후 앱 윈도우가 자동으로 열립니다
 
-1. ZIP 파일을 다운로드하여 압축 해제
-2. `run/run.command` 더블클릭 (또는 터미널에서 `bash run/run.command`)
-3. 브라우저에서 http://localhost:8333 자동 열림
+#### 최초 설치 (WSL 미설치 PC)
 
-> 첫 실행 시 의존성 (tshark, scat, Node.js 패키지)이 자동 설치됩니다.
+새 PC에서는 EXE 실행 전에 `setup-wsl.bat`을 먼저 실행해야 합니다:
 
-### 1.2 Windows — File Mode (WSL 불필요)
+1. Release에서 `setup-wsl.bat`을 다운로드합니다
+2. 우클릭 → **관리자 권한으로 실행**
+3. WSL2 + Ubuntu 설치 완료 후 **재부팅** 안내 → PC 재부팅
+4. 재부팅 후 `setup-wsl.bat`을 **한 번 더 실행** → 나머지 패키지 설치
+5. "Setup complete!" 메시지 확인 → 이제 EXE를 실행하면 됩니다
 
-**사전 요구사항 없음** — 첫 실행 시 모든 의존성이 자동으로 설치됩니다.
+> ⚠️ 재부팅 전에는 WSL이 활성화되지 않습니다. 반드시 재부팅 후 bat을 다시 실행하세요.
 
-1. ZIP 파일을 다운로드하여 압축 해제
-2. `run/start-filemode.bat` 더블클릭
-3. 브라우저에서 http://localhost:8333 자동 열림
+#### 이후 실행
 
-> 첫 실행 시 Node.js, Python, Wireshark (tshark), git, scat, scat.lua 플러그인이 winget을 통해 자동 설치됩니다. 설치 후 스크립트 재시작이 필요할 수 있습니다.
+- WSL 초기화 후 서버를 시작합니다 (약 10초)
+- 이전 실행이 남아있으면 WSL을 리셋 후 재시작합니다 ("Resetting WSL..." 10~15초 소요)
+- 윈도우를 닫으면 서버가 자동으로 종료됩니다
 
-### 1.3 Windows — WSL (향후 USB Mode 대비)
+⚠️ 최초 실행 시 EXE 옆에 `nr-rrc-visualizer-linux` 파일이 생성됩니다. 이 파일을 삭제하지 마세요.
 
-**사전 요구사항:** Windows 10/11, 관리자 권한, BIOS 가상화 활성화
+### 1.2 macOS (DMG)
 
-1. ZIP 파일을 다운로드하여 압축 해제
-2. `run/setup-wsl.bat` 더블클릭 (최초 1회, 자동으로 관리자 권한 요청)
-3. `run/start-usbmode.bat` 더블클릭 (매번, 자동으로 관리자 권한 요청)
-4. 브라우저에서 http://localhost:8333 자동 열림
+> ⚠️ 사전 요구사항: [Homebrew](https://brew.sh)가 설치되어 있어야 합니다. 최초 실행 시 필요한 의존성(Wireshark 등)을 자동 설치합니다.
 
-> 최초 설정 시 재부팅이 필요합니다. 재부팅 후 `setup-wsl.bat`을 다시 실행하여 설정을 완료하세요.
+1. [Releases](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/releases)에서 최신 `NR-RRC-Visualizer-vX.X.X-macOS.dmg`를 다운로드합니다
+2. DMG 파일을 더블클릭하여 마운트합니다
+3. `NR RRC Visualizer.app`을 Applications 폴더로 드래그합니다
+4. 최초 실행 시 macOS Gatekeeper 경고가 표시됩니다:
+   - `.app`을 **우클릭** → **열기** → **열기** 클릭
+   - 이후 실행부터는 더블클릭으로 바로 열립니다
+5. 스플래시 화면이 표시되며 의존성을 확인/설치합니다 (최초 1회, 2~3분 소요)
+6. 준비 완료 후 앱 윈도우가 자동으로 열립니다
+
+> 💡 Python, Node.js 등 사전 설치가 필요 없습니다 — standalone 앱입니다.
+
+> 💡 `.app`을 Dock에 고정하면 빠르게 실행할 수 있습니다.
 
 ---
 
@@ -429,19 +442,19 @@ rrcReconfiguration
 WSL2에 필요한 VirtualMachinePlatform은 Windows 커널 기능이므로 최초 활성화 시 재부팅이 필수입니다.  
 재부팅 후 `setup-wsl.bat`을 다시 실행하면 이어서 설치됩니다.
 
-### 13.3 브라우저에서 페이지 연결 불가
+### 13.3 윈도우가 열리지 않음
 
-**증상:** 서버는 실행되었다고 표시되지만 브라우저에서 `ERR_CONNECTION_REFUSED` 또는 페이지가 열리지 않음
+**증상:** EXE 실행 후 splash가 표시되지만 네이티브 윈도우가 열리지 않음
 
-**원인:** WSL2는 가상 네트워크를 사용하며, Windows에서 localhost 접근은 WSL2 → Windows 포워딩에 의존합니다. 서버를 종료하지 않고 `run-wsl.bat`을 다시 실행하면 이 포워딩이 일시적으로 꼬일 수 있습니다.
+**원인:** WSL2 가상 네트워크의 localhost 포워딩이 일시적으로 불안정할 수 있습니다.
 
 **해결:**
 
-1. 잠시 대기 후 (30초~1분) 브라우저 새로고침
-2. 여전히 안 되면 CMD(관리자)에서 `wsl --shutdown` 실행 후 `run-wsl.bat` 재실행
+1. EXE를 종료하고 다시 실행 (자동으로 이전 인스턴스를 정리합니다)
+2. 여전히 안 되면 CMD(관리자)에서 `wsl --shutdown` 실행 후 EXE 재실행
 3. 그래도 안 되면 Windows 재부팅
 
-**예방:** 서버를 종료하려면 CMD 창에서 **Ctrl+C**를 사용하세요. CMD 창을 X 버튼으로 닫거나, 서버가 실행 중인 상태에서 `run-wsl.bat`을 다시 실행하면 문제가 발생할 수 있습니다.
+**예방:** 윈도우를 닫으면 서버가 자동으로 종료됩니다. 비정상 종료 시 다음 실행 때 자동 정리됩니다.
 
 ---
 

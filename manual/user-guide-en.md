@@ -1,7 +1,7 @@
 # NR RRC Visualizer User Guide
 
-**Version:** v1.2.0  
-**Date:** 2026-06-03  
+**Version:** v1.4.0  
+**Date:** 2026-06-08  
 **Author:** JUSEOK AHN <ajs3013@lguplus.co.kr>
 
 ---
@@ -26,36 +26,49 @@
 
 ## 1. How to Run
 
-### 1.1 macOS
+### 1.1 Windows (EXE)
 
-**Prerequisites:** [Homebrew](https://brew.sh), Python 3.10+, Node.js 20+
+1. Download the latest `NR-RRC-Visualizer-vX.X.X.exe` from [Releases](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/releases)
+2. **Run as administrator** (right-click → Run as administrator recommended)
+3. A splash screen appears while the environment is being set up
+4. The app window opens automatically when ready
 
-1. Download and extract the ZIP file
-2. Double-click `run/run.command` (or run `bash run/run.command` in terminal)
-3. Browser opens at http://localhost:8333
+#### First-time setup (no WSL installed)
 
-> On first run, dependencies (tshark, scat, Node.js packages) are installed automatically.
+On a fresh PC, run `setup-wsl.bat` before the EXE:
 
-### 1.2 Windows — File Mode (no WSL required)
+1. Download `setup-wsl.bat` from the Release
+2. Right-click → **Run as administrator**
+3. WSL2 + Ubuntu installation completes → **reboot** as prompted
+4. After reboot, run `setup-wsl.bat` **once more** to install remaining packages
+5. "Setup complete!" message appears → you can now run the EXE
 
-**No prerequisites required** — all dependencies are installed automatically on first run.
+> ⚠️ WSL is not active until after a reboot. You must reboot and run the bat again.
 
-1. Download and extract the ZIP file
-2. Double-click `run/start-filemode.bat`
-3. Browser opens at http://localhost:8333
+#### Subsequent launches
 
-> On first run, Node.js, Python, Wireshark (tshark), git, scat, and scat.lua plugin are automatically installed via winget. A script restart may be required after installation.
+- WSL initializes and starts the server (~10 seconds)
+- If a previous instance exists, WSL is reset first ("Resetting WSL..." 10~15 seconds)
+- Closing the window automatically stops the server
 
-### 1.3 Windows — WSL (for future USB Mode)
+⚠️ On first run, an `nr-rrc-visualizer-linux` file is created next to the EXE. Do not delete this file.
 
-**Prerequisites:** Windows 10/11, Administrator access, BIOS virtualization enabled
+### 1.2 macOS (DMG)
 
-1. Download and extract the ZIP file
-2. Double-click `run/setup-wsl.bat` (one-time setup, auto-elevates to admin)
-3. Double-click `run/start-usbmode.bat` (every time, auto-elevates to admin)
-4. Browser opens at http://localhost:8333
+> ⚠️ Prerequisite: [Homebrew](https://brew.sh) must be installed. Required dependencies (Wireshark, etc.) are auto-installed on first launch.
 
-> First-time setup requires a reboot. After reboot, run `setup-wsl.bat` again to complete.
+1. Download the latest `NR-RRC-Visualizer-vX.X.X-macOS.dmg` from [Releases](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/releases)
+2. Double-click the DMG file to mount it
+3. Drag `NR RRC Visualizer.app` to the Applications folder
+4. On first launch, macOS Gatekeeper will show a warning:
+   - **Right-click** the .app → **Open** → click **Open**
+   - Subsequent launches work with a normal double-click
+5. A splash screen appears and installs dependencies (first time only, 2-3 min)
+6. The app window opens automatically when ready
+
+> 💡 No Python, Node.js, or other prerequisites needed — it's a standalone app.
+
+> 💡 Pin the .app to the Dock for quick access.
 
 ---
 
@@ -429,19 +442,19 @@ rrcReconfiguration
 VirtualMachinePlatform is a Windows kernel feature that requires a reboot on first activation.  
 After rebooting, run `setup-wsl.bat` again to continue installation.
 
-### 13.3 Browser Cannot Connect to Page
+### 13.3 App Window Does Not Open
 
-**Symptom:** Server shows "starting" message but browser displays `ERR_CONNECTION_REFUSED`
+**Symptom:** EXE runs and splash appears but the native window does not open
 
-**Cause:** WSL2 uses a virtual network, and Windows accesses localhost through WSL2 → Windows forwarding. If `run-wsl.bat` is executed again without stopping the previous server, this forwarding can temporarily break.
+**Cause:** WSL2 uses a virtual network, and localhost forwarding can be temporarily unstable.
 
 **Solution:**
 
-1. Wait 30 seconds to 1 minute, then refresh the browser
-2. If still not working, run `wsl --shutdown` in an Administrator CMD, then re-run `run-wsl.bat`
+1. Close the EXE and run again (previous instances are cleaned up automatically)
+2. If still not working, run `wsl --shutdown` in an Administrator CMD, then re-run the EXE
 3. If that doesn't help, reboot Windows
 
-**Prevention:** Always use **Ctrl+C** to stop the server. Avoid closing the CMD window with the X button or running `run-wsl.bat` again while the server is still running.
+**Prevention:** Closing the window automatically stops the server. If the app exits abnormally, the next launch will clean up automatically.
 
 ---
 

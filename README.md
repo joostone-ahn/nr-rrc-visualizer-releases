@@ -34,7 +34,7 @@ This tool bridges that gap by:
 
 ## 🌐 Online Demo
 
-**[Try Online Demo](https://huggingface.co/spaces/Joostone/nr-rrc-visualizer)**
+**[Try Online Demo](https://nr-rrc-visualizer.onrender.com)**
 
 ![NR RRC Visualizer - BWP Map](docs/images/screenshot_rrc_visualizer_bwp.png)
 ![NR RRC Visualizer - CSI-RS](docs/images/screenshot_rrc_visualizer_csi.png)
@@ -45,36 +45,12 @@ This tool bridges that gap by:
 
 Download the latest release from [Releases](https://github.com/joostone-ahn/nr-rrc-visualizer-releases/releases/latest).
 
-### macOS
+1. Download `NR-RRC-Visualizer-vX.X.X.exe`
+2. Double-click to run
 
-**Prerequisites**: [Homebrew](https://brew.sh), Python 3.10+, Node.js 20+
-
-1. Download and extract `nr-rrc-visualizer-vX.X.X-macos.zip`
-2. Double-click `run/run.command` (or run `bash run/run.command` in terminal)
-3. Browser opens at `http://localhost:8333`
-
-> On first run, dependencies (tshark, scat, Node.js packages) are installed automatically.
-
-### Windows — File Mode (no WSL)
-
-**No prerequisites required** — all dependencies are installed automatically on first run.
-
-1. Download and extract `nr-rrc-visualizer-vX.X.X-windows.zip`
-2. Double-click `run/start-filemode.bat`
-3. Browser opens at `http://localhost:8333`
-
-> First run automatically installs Node.js, Python, Wireshark (tshark), git, scat, and scat.lua plugin via winget. A script restart may be required after installation.
-
-### Windows — WSL (for future USB Mode)
-
-**Prerequisites**: Windows 10/11, Administrator access, BIOS virtualization enabled
-
-1. Download and extract `nr-rrc-visualizer-vX.X.X-windows.zip`
-2. Double-click `run/setup-wsl.bat` (one-time setup, auto-elevates to admin)
-3. Double-click `run/start-usbmode.bat` (every time, auto-elevates to admin)
-4. Browser opens at `http://localhost:8333`
-
-> First-time setup requires a reboot. After reboot, run `setup-wsl.bat` again to complete.
+> **First run:** WSL2, usbipd, Node.js, scat, tshark are installed automatically (may require reboot).  
+> **Subsequent runs:** Instant startup.  
+> A `nr-rrc-visualizer-linux` file is created next to the exe — do not delete it.
 
 ---
 
